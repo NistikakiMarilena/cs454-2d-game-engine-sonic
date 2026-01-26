@@ -42,6 +42,7 @@
 
 #build folder
 build/
+.vs/
 
 #import libraries
 external/sdl/
