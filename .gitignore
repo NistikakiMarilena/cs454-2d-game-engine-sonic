@@ -39,3 +39,9 @@
 
 # debug information files
 *.dwo
+
+#build folder
+build/
+
+#import libraries
+external/sdl/
