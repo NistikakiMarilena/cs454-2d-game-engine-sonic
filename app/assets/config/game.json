@@ -1,0 +1,7 @@
+{
+    "configs": {
+        "window": "config/window.json",
+        "render": "config/render.json",
+        "input": "config/input.json"
+    }
+}

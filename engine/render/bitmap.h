@@ -18,13 +18,6 @@ namespace gfx
 
 	typedef void* Bitmap;
 
-	// in renderer
-	void Init();
-	void Shudown();
-	Bitmap GetScreenBuffer();
-	void flush();
-	// end in renderer
-
 	Bitmap LoadBitmap(const char* path);
 	Bitmap CreateBitmap(int width, int height);
 	void DeleteBitmap(Bitmap bmp);
