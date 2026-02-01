@@ -20,6 +20,8 @@ namespace gfx
 
 	Bitmap LoadBitmap(const char* path);
 	Bitmap CreateBitmap(int width, int height);
+	int BitmapWidth(Bitmap bitmap);
+	int BitmapHeight(Bitmap bitmap);
 	void DeleteBitmap(Bitmap bmp);
 	void BlitBitmap(
 		Bitmap srcBmp,

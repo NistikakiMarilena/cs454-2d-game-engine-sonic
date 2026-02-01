@@ -1,8 +1,10 @@
 #include "stateManager.h"
 
+#include "render/bitmap.h"
 #include "render/renderer.h"
 #include <stdexcept>
 #include <string>
+#include <iostream>
 #include <core/config/config.cpp>
 
 using namespace core::config;
@@ -15,7 +17,7 @@ void StateManager::Initialize()
     std::string assetsPath = std::string(ASSETS);
     const std::string& gameJsonRelPath = "config/game.json";
 
-    GameConfig cfg = LoadFromAssetsRoot(assetsPath, gameJsonRelPath);
+    cfg = LoadFromAssetsRoot(assetsPath, gameJsonRelPath);
 
     // TODO: use cfg.window.* to create the real SDL window when you add that code
     // For now you are using your gfx wrapper:
@@ -77,17 +79,27 @@ void StateManager::RenderFrame()
         return;
 
     // Use rect + positions from config
-    gfx::Rect rect{ cfg.render.rectX, cfg.render.rectY, cfg.render.rectW, cfg.render.rectH };
+    // gfx::Rect rect{ cfg.render.rectX, cfg.render.rectY, cfg.render.rectW, cfg.render.rectH };
+
+    if (cfg.render.drawPositions.empty())
+        return;
 
     for (const auto& p : cfg.render.drawPositions)
     {
         gfx::BlitBitmap(
             testBitmap,
-            rect,
+            { 0, 0, gfx::BitmapWidth(testBitmap), gfx::BitmapHeight(testBitmap) },
             gfx::GetScreenBuffer(),
             { p.x, p.y }
         );
     }
+
+    // gfx::BlitBitmap(
+    //     testBitmap,
+    //     { 0, 0, gfx::BitmapWidth(testBitmap), gfx::BitmapHeight(testBitmap) },
+    //     gfx::GetScreenBuffer(),
+    //     { 0, 0 }
+    // );
 }
 
 void StateManager::EnsureInitialized(const char* caller) const

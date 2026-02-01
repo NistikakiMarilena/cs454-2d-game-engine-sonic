@@ -22,10 +22,12 @@ target_include_directories(${PROJECT_NAME}
 )
 
 find_package(SDL REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         SDL3::SDL3
+        nlohmann_json::nlohmann_json
 )
 
 source_group(

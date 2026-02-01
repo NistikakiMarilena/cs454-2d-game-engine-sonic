@@ -17,3 +17,10 @@ CPMAddPackage(
     GITHUB_REPOSITORY libsdl-org/SDL
     GIT_TAG main
 )
+
+# Json 
+CPMAddPackage(
+    NAME nlohmann_json 
+    GITHUB_REPOSITORY nlohmann/json
+    GIT_TAG develop
+)

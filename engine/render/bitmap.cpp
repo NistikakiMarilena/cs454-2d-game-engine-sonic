@@ -5,6 +5,24 @@
 
 namespace gfx
 {
+	int BitmapWidth(Bitmap bitmap)
+	{
+		auto bmp = static_cast<SDL_Surface*>(bitmap);
+		if (bmp)
+			return bmp->w;
+		else
+			return -1;
+	}
+
+	int BitmapHeight(Bitmap bitmap)
+	{
+		auto bmp = static_cast<SDL_Surface*>(bitmap);
+		if (bmp)
+			return bmp->h;
+		else
+			return -1;
+	}
+
 	Bitmap LoadBitmap(const char* path)
 	{
 		int w = 0, h = 0, ch = 0;
@@ -44,7 +62,6 @@ namespace gfx
 
 	Bitmap CreateBitmap(int width, int height)
 	{
-		// TODO: Make color API (follow savidis stuff or copy paste mine)
 		SDL_Surface* bmp = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888);
 		SDL_FillSurfaceRect(
 			bmp,

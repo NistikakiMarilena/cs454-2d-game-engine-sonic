@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <stdexcept>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -62,7 +63,7 @@ namespace core::config {
 
         out.drawPositions.clear();
         for (const auto& p : r.at("drawPositions"))
-            out.drawPositions.push_back({ p.at("x").get<int>(), p.at("y").get<int>() });
+            out.drawPositions.push_back({ p.at("x").get<int>(), p.at("y").get<int>() }); 
 
         return out;
     }
@@ -98,9 +99,12 @@ namespace core::config {
         const json game = LoadJsonFileOrThrow(AssetsPath(assetsRoot, gameJsonRelPath));
         const ConfigPaths paths = ReadConfigPaths(game);
 
-        const json w = LoadJsonFileOrThrow(AssetsPath(assetsRoot, paths.windowRel));
-        const json r = LoadJsonFileOrThrow(AssetsPath(assetsRoot, paths.renderRel));
-        const json i = LoadJsonFileOrThrow(AssetsPath(assetsRoot, paths.inputRel));
+        std::string path = AssetsPath(assetsRoot, paths.windowRel);
+        const json w = LoadJsonFileOrThrow(path);
+        path = AssetsPath(assetsRoot, paths.renderRel);
+        const json r = LoadJsonFileOrThrow(path);
+        path = AssetsPath(assetsRoot, paths.inputRel);
+        const json i = LoadJsonFileOrThrow(path);
 
         GameConfig out;
         out.window = ParseWindowConfig(w);

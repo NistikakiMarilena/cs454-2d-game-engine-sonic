@@ -46,3 +46,4 @@ build/
 
 #import libraries
 external/sdl/
+external/nlohmann_json/

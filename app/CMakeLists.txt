@@ -28,20 +28,6 @@ target_link_libraries(${PROJECT_NAME}
         engine
 )
 
-include(FetchContent)
-
-FetchContent_Declare(
-  nlohmann_json
-  GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.11.3
-)
-
-FetchContent_MakeAvailable(nlohmann_json)
-
-target_link_libraries(engine PUBLIC nlohmann_json::nlohmann_json)
-
-target_link_libraries(application PUBLIC nlohmann_json::nlohmann_json)
-
 source_group(
     TREE 
         ${CMAKE_CURRENT_SOURCE_DIR} 
