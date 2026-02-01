@@ -11,7 +11,9 @@ gfx::Bitmap g_pScreenBuffer = nullptr;
 
 namespace gfx
 {
-	void Init()
+	void Init(const char* windowTitle,
+		int windowWidth, int windowHeight,
+		int sceneWidth, int sceneHeight)
 	{
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD);
 
@@ -20,22 +22,22 @@ namespace gfx
 		flags |= SDL_WINDOW_MOUSE_CAPTURE;
 
 		SDL_CreateWindowAndRenderer(
-			"DEEEEEMYYYY",
-			1024,
-			768,
+			windowTitle,
+			windowWidth,
+			windowHeight,
 			flags,
 			&g_pWindow,
 			&g_pRenderer
 		);
 
-		g_pScreenBuffer = CreateBitmap(1024, 768);
+		g_pScreenBuffer = CreateBitmap(sceneWidth, sceneHeight);
 
 		g_pBackBuffer = SDL_CreateTexture(
 			g_pRenderer,
 			SDL_PIXELFORMAT_RGBA8888,
 			SDL_TEXTUREACCESS_STREAMING,
-			1024,
-			768
+			sceneWidth,
+			sceneHeight
 		);
 	}
 
@@ -45,6 +47,11 @@ namespace gfx
 		SDL_DestroyRenderer(g_pRenderer);
 		SDL_DestroyWindow(g_pWindow);
 		SDL_Quit();
+
+		g_pBackBuffer = nullptr;
+		g_pScreenBuffer = nullptr;
+		g_pRenderer = nullptr;
+		g_pWindow = nullptr;
 	}
 
 	Bitmap GetScreenBuffer()

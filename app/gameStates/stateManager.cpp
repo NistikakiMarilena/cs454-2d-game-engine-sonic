@@ -14,16 +14,19 @@ void StateManager::Initialize()
     if (isInitialized)
         throw std::logic_error("StateManager::Initialize called twice.");
 
-    std::string assetsPath = std::string(ASSETS);
-    const std::string& gameJsonRelPath = "config/game.json";
-
-    cfg = LoadFromAssetsRoot(assetsPath, gameJsonRelPath);
+    cfg = LoadFromAssetsRoot(std::string(ASSETS), "config/game.json");
 
     // TODO: use cfg.window.* to create the real SDL window when you add that code
     // For now you are using your gfx wrapper:
-    gfx::Init();
+    gfx::Init(
+        cfg.window.title.c_str(),
+        cfg.window.width,
+        cfg.window.height,
+        cfg.window.sceneWidth,
+        cfg.window.sceneHeight
+    );
 
-    std::string fullImagePath = AssetsPath(assetsPath, cfg.render.testImage);
+    std::string fullImagePath = AssetsPath(std::string(ASSETS), cfg.render.testImage);
     testBitmap = gfx::LoadBitmap(fullImagePath.c_str());
 
     keepOpen = true;
