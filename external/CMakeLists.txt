@@ -18,6 +18,13 @@ CPMAddPackage(
     GIT_TAG main
 )
 
+# SDL3 audio
+CPMAddPackage(
+    NAME SDL_mixer
+    GITHUB_REPOSITORY libsdl-org/SDL_mixer
+    GIT_TAG main
+)
+
 # Json 
 CPMAddPackage(
     NAME nlohmann_json 

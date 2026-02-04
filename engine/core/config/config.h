@@ -31,6 +31,12 @@ namespace core::config {
         InputConfig input;
     };
 
+    struct AudioConfig {
+        int freq = 44100;
+        int channels = 2;
+        float volume = 0.75f;
+    };
+
     // Loads app/assets/config/game.json and then the referenced files.
     GameConfig LoadFromAssetsRoot(const std::string& assetsRoot,
         const std::string& gameJsonRelPath = "config/game.json");

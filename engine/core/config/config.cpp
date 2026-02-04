@@ -20,7 +20,7 @@ namespace core::config {
         return j;
     }
 
-    static inline std::string AssetsPath(const std::string& assetsRoot, const std::string& rel)
+    inline std::string AssetsPath(const std::string& assetsRoot, const std::string& rel)
     {
         return assetsRoot + "/" + rel;
     }
