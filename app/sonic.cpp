@@ -248,7 +248,7 @@ void SonicGame::BuildAnimations(void)
 
 void SonicGame::ClearSceneBuffer(void)
 {
-    gfx::ClearBitmap(sceneBuffer, 10, 10, 20, 255);
+    gfx::ClearBitmap(sceneBuffer, 20, 80, 200, 255);
 }
 
 void SonicGame::BlitMapToScene(void)
@@ -367,7 +367,10 @@ void SonicGame::UpdateAnimationState(int moveX, int moveY)
     }
 
     if (moveX != 0)
+    {
         lastMoveX = moveX;
+        facingLeft = (moveX < 0);
+    }
     if (moveY != 0)
         lastMoveY = moveY;
 }
@@ -443,6 +446,17 @@ gfx::Point SonicGame::WorldToScreen(int worldX, int worldY) const
     return { worldX - cameraX, worldY - cameraY };
 }
 
+void SonicGame::BlitPlayerFrame(gfx::Bitmap dest, const gfx::Rect& src, const gfx::Point& screenPos) const
+{
+    if (facingLeft)
+    {
+        gfx::BlitBitmapFlippedX(spriteSheet, src, dest, screenPos);
+        return;
+    }
+
+    gfx::BlitBitmap(spriteSheet, src, dest, screenPos);
+}
+
 void SonicGame::UpdateCamera(void)
 {
     const int viewW = config.window.viewWidth;
@@ -499,12 +513,7 @@ void SonicGame::BlitAnimationLayer(gfx::Bitmap dest)
     const gfx::Rect src = GetCurrentAnimFrameRect(*frames);
     const gfx::Point screenPos = WorldToScreen(playerX, playerY);
 
-    gfx::BlitBitmap(
-        spriteSheet,
-        src,
-        dest,
-        screenPos
-    );
+    BlitPlayerFrame(dest, src, screenPos);
 }
 
 void SonicGame::RenderBitmap(gfx::Bitmap bitmap)

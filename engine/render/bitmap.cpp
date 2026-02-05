@@ -112,4 +112,55 @@ namespace gfx
 			&dstRect
 		);
 	}
+
+	void BlitBitmapFlippedX(Bitmap srcBmp, Rect rect, Bitmap destBmp, Point point)
+	{
+		SDL_Surface* src = (SDL_Surface*)srcBmp;
+		SDL_Surface* dest = (SDL_Surface*)destBmp;
+		if (!src || !dest)
+			return;
+
+		int rx = rect.x;
+		int ry = rect.y;
+		int rw = rect.w;
+		int rh = rect.h;
+		if (rw <= 0 || rh <= 0)
+			return;
+
+		if (rx < 0) { rw += rx; rx = 0; }
+		if (ry < 0) { rh += ry; ry = 0; }
+		if (rx + rw > src->w) rw = src->w - rx;
+		if (ry + rh > src->h) rh = src->h - ry;
+		if (rw <= 0 || rh <= 0)
+			return;
+
+		SDL_Surface* temp = SDL_CreateSurface(rw, rh, SDL_PIXELFORMAT_RGBA8888);
+		if (!temp)
+			return;
+
+		SDL_LockSurface(src);
+		SDL_LockSurface(temp);
+
+		auto* srcPixels = (Uint8*)src->pixels;
+		auto* tmpPixels = (Uint8*)temp->pixels;
+		const int srcPitch = src->pitch;
+		const int tmpPitch = temp->pitch;
+
+		for (int y = 0; y < rh; ++y)
+		{
+			const Uint32* srcRow = (const Uint32*)(srcPixels + (ry + y) * srcPitch);
+			Uint32* tmpRow = (Uint32*)(tmpPixels + y * tmpPitch);
+
+			for (int x = 0; x < rw; ++x)
+				tmpRow[x] = srcRow[rx + (rw - 1 - x)];
+		}
+
+		SDL_UnlockSurface(temp);
+		SDL_UnlockSurface(src);
+
+		SDL_Rect dstRect = { point.x, point.y, rw, rh };
+		SDL_BlitSurface(temp, nullptr, dest, &dstRect);
+
+		SDL_DestroySurface(temp);
+	}
 }

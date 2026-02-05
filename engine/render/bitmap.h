@@ -32,4 +32,10 @@ namespace gfx
 		Bitmap destBmp,
 		Point point
 	);
+	void BlitBitmapFlippedX(
+		Bitmap srcBmp,
+		Rect rect,
+		Bitmap destBmp,
+		Point point
+	);
 }

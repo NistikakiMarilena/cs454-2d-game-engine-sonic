@@ -47,6 +47,7 @@ private:
     std::string currentAnim;
     int lastMoveX = 0;
     int lastMoveY = 0;
+    bool facingLeft = false;
 
     void BuildMapLayer(void);
     void BuildAnimations(void);
@@ -62,6 +63,7 @@ private:
     const std::vector<gfx::Rect>* GetCurrentAnimFrames(void) const;
     gfx::Rect GetCurrentAnimFrameRect(const std::vector<gfx::Rect>& frames) const;
     gfx::Point WorldToScreen(int worldX, int worldY) const;
+    void BlitPlayerFrame(gfx::Bitmap dest, const gfx::Rect& src, const gfx::Point& screenPos) const;
     void UpdateCamera(void);
     void BlitSpriteLayer(gfx::Bitmap dest);
     void BlitAnimationLayer(gfx::Bitmap dest);
