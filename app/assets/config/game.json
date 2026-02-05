@@ -2,6 +2,8 @@
     "configs": {
         "window": "config/window.json",
         "render": "config/render.json",
-        "input": "config/input.json"
+        "input": "config/input.json",
+        "audio": "config/audio.json",
+        "player": "config/player.json"
     }
 }

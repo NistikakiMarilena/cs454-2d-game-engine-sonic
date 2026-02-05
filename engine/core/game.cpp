@@ -1,14 +1,17 @@
 #include "game.h"
 
-bool Game::IsFinished(void) const
-{
-    // If no predicate is provided, do not finish by default.
-    if (!done)
-        return false;
+#include <chrono>
+#include <thread>
 
-    // done() == true means finished
-    return done();
-}
+// bool Game::IsFinished(void) const
+// {
+//     // If no predicate is provided, do not finish by default.
+//     if (!done)
+//         return false;
+
+//     // done() == true means finished
+//     return done();
+// }
 
 void Game::Pause(uint64_t t)
 {
@@ -32,6 +35,8 @@ void Game::MainLoop(void)
 
 void Game::MainLoopIteration(void)
 {
+    const auto frameStart = std::chrono::steady_clock::now();
+
     Render();
     Input();
 
@@ -44,4 +49,10 @@ void Game::MainLoopIteration(void)
         CommitDestructions();
         UserCode();
     }
+
+    const auto frameEnd = std::chrono::steady_clock::now();
+    const auto frameElapsed = std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart);
+    constexpr auto targetFrame = std::chrono::microseconds(16667); // ~60 FPS
+    if (frameElapsed < targetFrame)
+        std::this_thread::sleep_for(targetFrame - frameElapsed);
 }

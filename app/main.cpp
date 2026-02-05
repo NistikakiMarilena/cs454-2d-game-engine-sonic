@@ -1,15 +1,15 @@
 #include "../engine/core/app.h"
 #include "sonic.h"
-//#include "../engine/core/config/config.h"
 
 int main()
 {
-    // std::string config_file = std::string(ASSETS) + '/' + "config/game.json";
-
     core::App App;
-    App.SetGame(new app::SonicGame());
+    auto* game = new SonicGame();
+    App.SetGame(game);
     App.Initialize(std::string(ASSETS));
+    game->Initialize();
     App.Run();
-    App.Clear();
+    App.Shutdown();
+    delete game;
     return 0;
 }

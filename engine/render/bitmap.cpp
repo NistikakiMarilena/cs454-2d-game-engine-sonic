@@ -80,6 +80,23 @@ namespace gfx
 		SDL_DestroySurface(surf);
 	}
 
+	void ClearBitmap(Bitmap bmp, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	{
+		if (!bmp)
+			return;
+
+		SDL_Surface* surf = (SDL_Surface*)bmp;
+		SDL_FillSurfaceRect(
+			surf,
+			nullptr,
+			SDL_MapRGBA(
+				SDL_GetPixelFormatDetails(SDL_PIXELFORMAT_RGBA8888),
+				nullptr,
+				r, g, b, a
+			)
+		);
+	}
+
 	void BlitBitmap(Bitmap srcBmp, Rect rect, Bitmap destBmp, Point point)
 	{
 		SDL_Surface* src = (SDL_Surface*)srcBmp;
